@@ -1,0 +1,497 @@
+<!DOCTYPE html>
+<html lang="ta">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>அரசு மேல் நிலைப் பள்ளி முனைவென்றி - பத்தாம் வகுப்பு அறிவியல்</title>
+<style>
+  :root {
+    --bg-color: #f4f7fb;
+    --card-bg: #ffffff;
+    --text-main: #1e293b;
+    --text-muted: #64748b;
+    --border-color: #e2e8f0;
+    --header-grad-1: #0f4c81;
+    --header-grad-2: #1e3a8a;
+    --primary: #1d4ed8;
+    --primary-hover: #1e40af;
+    --ans-bg: #f8fafc;
+    --ans-border: #3b82f6;
+    --done-bg: #f0fdf4;
+    --done-border: #22c55e;
+    --badge-phy-bg: #dbeafe; --badge-phy-tx: #1e40af;
+    --badge-che-bg: #fef3c7; --badge-che-tx: #92400e;
+    --badge-bio-bg: #dcfce7; --badge-bio-tx: #166534;
+    --shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.08), 0 2px 4px -1px rgba(0, 0, 0, 0.04);
+  }
+
+  body.dark-mode {
+    --bg-color: #0f172a;
+    --card-bg: #1e293b;
+    --text-main: #f1f5f9;
+    --text-muted: #94a3b8;
+    --border-color: #334155;
+    --header-grad-1: #020617;
+    --header-grad-2: #1e1b4b;
+    --primary: #3b82f6;
+    --primary-hover: #60a5fa;
+    --ans-bg: #0f172a;
+    --ans-border: #60a5fa;
+    --done-bg: #064e3b;
+    --done-border: #10b981;
+    --badge-phy-bg: #1e3a8a; --badge-phy-tx: #bfdbfe;
+    --badge-che-bg: #78350f; --badge-che-tx: #fde68a;
+    --badge-bio-bg: #14532d; --badge-bio-tx: #bbf7d0;
+    --shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.4);
+  }
+
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  body {
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    background-color: var(--bg-color);
+    color: var(--text-main);
+    line-height: 1.6;
+    transition: background-color 0.3s, color 0.3s;
+    padding-bottom: 40px;
+  }
+
+  header {
+    background: linear-gradient(135deg, var(--header-grad-1), var(--header-grad-2));
+    color: #ffffff;
+    padding: 24px 16px;
+    text-align: center;
+    box-shadow: 0 4px 12px rgba(0,0,0,0.15);
+    position: relative;
+  }
+
+  .top-bar {
+    max-width: 960px;
+    margin: 0 auto 12px auto;
+    display: flex;
+    justify-content: flex-end;
+  }
+
+  .theme-btn {
+    background: rgba(255, 255, 255, 0.15);
+    color: #fff;
+    border: 1px solid rgba(255, 255, 255, 0.3);
+    padding: 6px 14px;
+    border-radius: 20px;
+    cursor: pointer;
+    font-size: 0.9rem;
+    font-weight: 600;
+    transition: all 0.2s;
+  }
+  .theme-btn:hover { background: rgba(255, 255, 255, 0.25); }
+
+  header h1 {
+    font-size: 1.85rem;
+    margin-bottom: 6px;
+    letter-spacing: 0.5px;
+    text-shadow: 0 2px 4px rgba(0,0,0,0.3);
+  }
+
+  header h2 {
+    font-size: 1.2rem;
+    font-weight: 500;
+    color: #e0f2fe;
+    margin-bottom: 12px;
+  }
+
+  .school-meta {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    gap: 10px;
+    margin-top: 8px;
+  }
+
+  .meta-input {
+    background: rgba(255, 255, 255, 0.15);
+    border: 1px solid rgba(255, 255, 255, 0.35);
+    color: #fff;
+    padding: 6px 12px;
+    border-radius: 6px;
+    font-size: 0.9rem;
+    min-width: 240px;
+    text-align: center;
+  }
+  .meta-input::placeholder { color: rgba(255, 255, 255, 0.75); }
+  .meta-input:focus { outline: none; background: rgba(255, 255, 255, 0.25); }
+
+  .container {
+    max-width: 960px;
+    margin: 20px auto;
+    padding: 0 16px;
+  }
+
+  .progress-card {
+    background: var(--card-bg);
+    border: 1px solid var(--border-color);
+    border-radius: 12px;
+    padding: 14px 18px;
+    margin-bottom: 16px;
+    box-shadow: var(--shadow);
+  }
+  .progress-header {
+    display: flex;
+    justify-content: space-between;
+    font-weight: 600;
+    font-size: 0.95rem;
+    margin-bottom: 8px;
+  }
+  .progress-bar-bg {
+    height: 10px;
+    background: var(--border-color);
+    border-radius: 999px;
+    overflow: hidden;
+  }
+  .progress-bar-fill {
+    height: 100%;
+    background: #22c55e;
+    width: 0%;
+    transition: width 0.3s ease;
+  }
+
+  .controls {
+    background: var(--card-bg);
+    border: 1px solid var(--border-color);
+    border-radius: 12px;
+    padding: 16px;
+    margin-bottom: 20px;
+    box-shadow: var(--shadow);
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+  }
+
+  .search-box {
+    width: 100%;
+    padding: 10px 14px;
+    border-radius: 8px;
+    border: 1px solid var(--border-color);
+    background: var(--bg-color);
+    color: var(--text-main);
+    font-size: 1rem;
+  }
+  .search-box:focus { outline: 2px solid var(--primary); }
+
+  .btn-group {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 8px;
+    align-items: center;
+  }
+
+  .filter-btn, .action-btn {
+    padding: 7px 14px;
+    border-radius: 8px;
+    border: 1px solid var(--border-color);
+    background: var(--bg-color);
+    color: var(--text-main);
+    cursor: pointer;
+    font-size: 0.9rem;
+    font-weight: 600;
+    transition: all 0.2s;
+  }
+  .filter-btn.active {
+    background: var(--primary);
+    color: #fff;
+    border-color: var(--primary);
+  }
+  .action-btn {
+    background: var(--card-bg);
+  }
+  .action-btn:hover, .filter-btn:hover:not(.active) {
+    border-color: var(--primary);
+    color: var(--primary);
+  }
+
+  .qa-list {
+    display: flex;
+    flex-direction: column;
+    gap: 14px;
+  }
+
+  .qa-card {
+    background: var(--card-bg);
+    border: 1px solid var(--border-color);
+    border-left: 5px solid var(--primary);
+    border-radius: 10px;
+    padding: 16px;
+    box-shadow: var(--shadow);
+    transition: transform 0.15s, background-color 0.2s;
+  }
+  .qa-card.completed {
+    background: var(--done-bg);
+    border-left-color: var(--done-border);
+  }
+
+  .card-top {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 8px;
+    gap: 8px;
+  }
+
+  .badge {
+    font-size: 0.78rem;
+    font-weight: 700;
+    padding: 3px 10px;
+    border-radius: 999px;
+  }
+  .badge.physics { background: var(--badge-phy-bg); color: var(--badge-phy-tx); }
+  .badge.chemistry { background: var(--badge-che-bg); color: var(--badge-che-tx); }
+  .badge.biology { background: var(--badge-bio-bg); color: var(--badge-bio-tx); }
+
+  .done-label {
+    display: flex;
+    align-items: center;
+    gap: 6px;
+    font-size: 0.85rem;
+    cursor: pointer;
+    color: var(--text-muted);
+    font-weight: 600;
+  }
+  .done-label input {
+    width: 16px;
+    height: 16px;
+    cursor: pointer;
+  }
+
+  .question {
+    font-size: 1.05rem;
+    font-weight: 700;
+    cursor: pointer;
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-start;
+    gap: 10px;
+  }
+
+  .toggle-icon {
+    font-size: 0.85rem;
+    color: var(--primary);
+    background: var(--bg-color);
+    padding: 2px 8px;
+    border-radius: 6px;
+    white-space: nowrap;
+  }
+
+  .answer {
+    margin-top: 12px;
+    padding: 12px 14px;
+    background: var(--ans-bg);
+    border-left: 3px solid var(--ans-border);
+    border-radius: 6px;
+    display: none;
+  }
+  .answer.open { display: block; }
+  .answer p {
+    margin-bottom: 6px;
+    font-size: 0.98rem;
+  }
+  .answer p:last-child { margin-bottom: 0; }
+
+  .empty-msg {
+    text-align: center;
+    padding: 30px;
+    color: var(--text-muted);
+    font-size: 1.05rem;
+  }
+
+  footer {
+    text-align: center;
+    margin-top: 30px;
+    font-size: 0.88rem;
+    color: var(--text-muted);
+  }
+</style>
+</head>
+<body>
+
+<header>
+  <div class="top-bar">
+    <button class="theme-btn" id="darkModeBtn" onclick="toggleDarkMode()">🌙 Dark Mode</button>
+  </div>
+  <h1>அரசு மேல் நிலைப் பள்ளி முனைவென்றி</h1>
+  <h2>பத்தாம் வகுப்பு அறிவியல் – முக்கிய வினா-விடைகள் (36)</h2>
+  <div class="school-meta">
+    <input type="text" id="schoolAddress" class="meta-input" placeholder="2026" oninput="saveMeta()">
+    <input type="text" id="teacherName" class="meta-input" placeholder="Prepared by A.Kennedy" oninput="saveMeta()">
+  </div>
+</header>
+
+<div class="container">
+  <div class="progress-card">
+    <div class="progress-header">
+      <span>படிப்பு முன்னேற்றம் (Completed)</span>
+      <span id="progressText">0 / 36 (0%)</span>
+    </div>
+    <div class="progress-bar-bg">
+      <div class="progress-bar-fill" id="progressFill"></div>
+    </div>
+  </div>
+
+  <div class="controls">
+    <input type="text" id="searchInput" class="search-box" placeholder="🔍 வினா அல்லது விடையைத் தேடுக (எ.கா: நியூட்டன், நிறப்பிரிகை, இதயம்)..." oninput="renderList()">
+    <div class="btn-group">
+      <button class="filter-btn active" onclick="setFilter('all', this)">அனைத்தும் (36)</button>
+      <button class="filter-btn" onclick="setFilter('physics', this)">இயற்பியல் (11)</button>
+      <button class="filter-btn" onclick="setFilter('chemistry', this)">வேதியியல் (12)</button>
+      <button class="filter-btn" onclick="setFilter('biology', this)">உயிரியல் (13)</button>
+    </div>
+    <div class="btn-group">
+      <button class="action-btn" onclick="toggleAllAnswers(true)">👁️ அனைத்து விடைகளையும் திற</button>
+      <button class="action-btn" onclick="toggleAllAnswers(false)">🙈 அனைத்து விடைகளையும் மூடு</button>
+      <button class="action-btn" onclick="shuffleQuestions()">🔀 வினாக்களைக் கலைத்துப் போடு (Shuffle)</button>
+      <button class="action-btn" onclick="resetOrder()">🔢 வரிசைப்படுத்து (1-36)</button>
+    </div>
+  </div>
+
+  <div class="qa-list" id="qaList"></div>
+</div>
+
+<footer>
+  அரசு மேல் நிலைப் பள்ளி முனைவென்றி • பத்தாம் வகுப்பு அறிவியல் பயிற்சித் தொகுப்பு
+</footer>
+
+<script>
+const originalData = [{"id": 1, "subject": "physics", "q": "1. நியூட்டனின் இயக்கத்திற்கான விதிகளை விளக்கு.", "a": ["i) நியூட்டனின் முதல் விதிப்படி, புறவிசை ஏதும் செயல்படாத வரையில் பொருள் தமது ஓய்வு நிலையிலோ அல்லது இயக்க நிலையிலோ தொடர்ந்து இருக்கும்.", "ii) நியூட்டனின் இரண்டாம் விதிப்படி, விசையானது உந்தமாறுபாட்டு வீதத்திற்கு நேர்தகவில் அமையும் (F = ma).", "iii) நியூட்டனின் மூன்றாம் விதிப்படி, ஒவ்வொரு விசைக்கும் சமமான எதிர் விசை உண்டு."]}, {"id": 2, "subject": "physics", "q": "2. நிறை – எடை வேறுபடுத்துக.", "a": ["i) நிறை அடிப்படை அளவு – எடை வழி அளவு.", "ii) நிறை ஸ்கேலார் அளவு – எடை வெக்டார் அளவு.", "iii) நிறையின் அலகு கிகி (kg) – எடையின் அலகு நியூட்டன் (N)."]}, {"id": 3, "subject": "physics", "q": "3. அ) நிறப்பிரிகை என்றால் என்ன? ஆ) வானம் ஏன் நீல நிறமாக தோன்றுகிறது?", "a": ["அ) வெள்ளை ஒளி விலகல் அடைந்து ஏழு நிறங்களாகப் பிரிகை அடைவதே நிறப்பிரிகை எனப்படும்.", "ஆ) நீல நிறத்துக்கு அலைநீளம் குறைவு; சிதறல் அளவு அதிகம்."]}, {"id": 4, "subject": "physics", "q": "4. ஒளியின் ஏதேனும் ஐந்து பண்புகளைக் கூறுக.", "a": ["i) ஒளி ஒரு ஆற்றல்.", "ii) ஒளி நேர்க்கோட்டில் செல்லும்.", "iii) ஒளி வெற்றிடத்தில் பரவும்.", "iv) காற்றில் ஒளியின் திசைவேகம் 3 × 10⁸ மீவி⁻¹.", "v) வெவ்வேறு நிறங்கள் வெவ்வேறு அலைநீளங்களையும், அதிர்வு எண்களையும் பெற்றிருக்கும்."]}, {"id": 5, "subject": "physics", "q": "5. நல்லியல்பு வாயு சமன்பாட்டினை தருவி.", "a": ["i) பாயில் விதிப்படி, PV = மாறிலி.", "ii) பரும விதிப்படி, V / T = மாறிலி.", "iii) அவகேட்ரோ விதிப்படி, V / n = மாறிலி.", "iv) மூன்றையும் சேர்க்க, PV / nT = மாறிலி. இது வாயு இணைச் சமன்பாடு ஆகும்.", "v) PV = RT என்பது நல்லியல்பு வாயுச் சமன்பாடு ஆகும்."]}, {"id": 6, "subject": "physics", "q": "6. ஒரு கலோரி – வரையறு.", "a": ["ஒரு கிராம் நீரின் வெப்பநிலையை 1°C உயர்த்தத் தேவைப்படும் வெப்பத்தின் அளவு ஒரு கலோரி ஆகும்."]}, {"id": 7, "subject": "physics", "q": "7. அ) மின்னோட்டம் என்றால் என்ன? ஆ) மின்னோட்டத்தின் அலகை வரையறு. இ) மின்னோட்டத்தை எந்த கருவியின் மூலம் அளவிடமுடியும்? அதனை ஒரு மின்சுற்றில் எவ்வாறு இணைக்கப்பட வேண்டும்?", "a": ["அ) கடத்தியின் வழியே ஒரு வினாடியில் பாயும் மின்னூட்டங்களின் அளவே மின்னோட்டம் ஆகும் (I = Q / t).", "ஆ) மின்னோட்டத்தின் அலகு ஆம்பியர். 1 ஆம்பியர் = 1 கூலும் / 1 வினாடி.", "இ) மின்னோட்டத்தை அளவிடும் கருவி அம்மீட்டர். அம்மீட்டரை தொடர் இணைப்பில் இணைக்க வேண்டும்."]}, {"id": 8, "subject": "physics", "q": "8. அ) ஜூல் வெப்ப விதி வரையறு. ஆ) நிக்கல் மற்றும் குரோமியம் கலந்த உலோகக்கலவை மின்சார வெப்பமேற்றும் சாதனமாக பயன்படுத்தப்படுவது ஏன்? இ) ஒரு மின் உருகு இழை எவ்வாறு மின்சாதனங்களை பாதுகாக்கிறது?", "a": ["அ) ஜூல் வெப்ப விதிப்படி, H = I²Rt.", "ஆ) (i) அதிக மின்தடையை கொண்டது. (ii) அதிக உருகுநிலை கொண்டது. (iii) விரைவில் ஆக்சிகரணம் ஆகாது.", "இ) அதிக மின்னோட்டம் பாயும் போது உருகி மின்சுற்று துண்டிக்கப்படும். மின்சாதனங்கள் சேதமடையாமல் பாதுகாக்கப்படும்."]}, {"id": 9, "subject": "physics", "q": "9. அ) மீயொலி அதிர்வுறுதல் என்றால் என்ன? ஆ) மீயொலி அதிர்வுறுதலின் பயன்கள் யாவை? இ) மீயொலி அதிர்வுகளை உணரும் மூன்று விலங்குகளைக் கூறுக.", "a": ["அ) 20,000 Hz க்கும் அதிகமாக அதிர்வெண் கொண்ட ஒலி மீயொலி எனப்படும்.", "ஆ) i) தாயின் வயிற்றில் கரு வளர்ச்சியை ஆராய அல்ட்ரா சோனாகிராபி என்ற கருவியில் பயன்படுகிறது. ii) விலங்குகள் தங்களுக்குள் தொடர்பு கொள்ளப் பயன்படுகிறது. iii) கடலின் ஆழத்தை கணக்கிட பயன்படுகிறது.", "இ) மீயொலியை உணரும் விலங்குகள்: கொசு, வவ்வால், நாய், டால்பின்."]}, {"id": 10, "subject": "physics", "q": "10. டாப்ளர் விளைவு நடைபெற முடியாத 2 சூழல்களைக் கூறுக.", "a": ["(i) ஒலி மூலமும் கேட்குநரும் ஓய்வு நிலையில் இருக்கும் போது.", "(ii) ஒலி மூலமும் கேட்குநரும் சம இடைவெளியில் நகரும்போது."]}, {"id": 11, "subject": "physics", "q": "11. இயற்கை மற்றும் செயற்கை கதிரியக்கத்தின் ஏதேனும் மூன்று பண்புகளை எழுதுக.", "a": ["i) இது தன்னிச்சையான நிகழ்வு – இது தூண்டப்பட்ட நிகழ்வு.", "ii) இதனைக் கட்டுப்படுத்த முடியாது – இதனைக் கட்டுப்படுத்த முடியும்.", "iii) 83-ஐ விட அதிக அணு எண் கொண்ட தனிமங்களில் நடைபெறுகிறது – 83-ஐ விட குறைவான அணு எண் கொண்ட தனிமங்களில் நடைபெறுகிறது."]}, {"id": 12, "subject": "chemistry", "q": "12. அணுக் கொள்கையின் கோட்பாடுகள் யாவை?", "a": ["1. அணு என்பது பிளக்கக்கூடிய துகள்.", "2. அணுவானது எளிய முழு எண்களின் விகிதத்தில் இருக்க வேண்டிய அவசியமில்லை.", "3. அணு என்பது வேதிவினையில் ஈடுபடும் மிகச்சிறிய துகள்.", "4. ஒரு அணுவின் நிறையிலிருந்து அதன் ஆற்றலை கணக்கிட முடியும்.", "5. அணுவை ஆக்கவோ அழிக்கவோ முடியாது."]}, {"id": 13, "subject": "chemistry", "q": "13. அணுக்கட்டு எண் என்றால் என்ன?", "a": ["மூலக்கூறுகளில் உள்ள அணுக்களின் எண்ணிக்கையே அணுக்கட்டு எண்."]}, {"id": 14, "subject": "chemistry", "q": "14. மோலார் பருமன் என்றால் என்ன?", "a": ["திட்ட வெப்ப அழுத்த நிலையில் ஒரு மோல் வாயுவின் பருமன் 22.4 லிட்டர். இதுவே மோலார் பருமன் ஆகும்."]}, {"id": 15, "subject": "chemistry", "q": "15. இருமடிக் கரைசல் என்றால் என்ன?", "a": ["ஒரு கரைப்பானும், ஒரு கரைபொருளும் சேர்ந்தது இருமடிக் கரைசல்."]}, {"id": 16, "subject": "chemistry", "q": "16. குளிர் பிரதேசங்களில் நீர்வாழ் உயிரிகள் அதிகம் வாழ்கின்றன. ஏன்?", "a": ["குளிர் பிரதேசங்களில் உள்ள நீர்நிலைகளில் அதிக அளவில் ஆக்சிசன் கரைந்துள்ளதால் உயிரினங்கள் அதிகம் வாழ்கின்றன."]}, {"id": 17, "subject": "chemistry", "q": "17. நீர்க்கரைசல் மற்றும் நீரற்ற கரைசல் என்றால் என்ன? எ.கா. தருக.", "a": ["நீர்க்கரைசல்: நீர் கரைப்பானாக உள்ள கரைசல் (எ.கா: நீர் + சர்க்கரை).", "நீரற்ற கரைசல்: நீரைத் தவிர, பிற திரவம் கரைப்பானாக உள்ள கரைசல் (எ.கா: கார்பன் டை சல்பைடு + சல்பர்)."]}, {"id": 18, "subject": "chemistry", "q": "18. கரைதிறனை பாதிக்கும் பல்வேறு காரணிகள் பற்றி குறிப்பு வரைக.", "a": ["(i) கரைபொருள் மற்றும் கரைப்பான் தன்மை: ஒத்த சேர்மங்கள் ஒத்த கரைப்பானில் கரைகின்றன.", "(ii) வெப்பநிலை: அ) திரவத்தில் திண்மங்களின் கரைதிறன் வெப்பநிலையை அதிகரித்தால் அதிகரிக்கும். ஆ) திரவத்தில் வாயுவின் கரைதிறன் வெப்பநிலையை அதிகரித்தால் குறைகிறது.", "(iii) அழுத்தம்: அழுத்தம் அதிகரிக்கும் போது திரவத்தில் வாயுவின் கரைதிறன் அதிகரிக்கும்."]}, {"id": 19, "subject": "chemistry", "q": "19. ஈரம் உறிஞ்சும் சேர்மங்களையும், ஈரம் உறிஞ்சிக் கரையும் சேர்மங்களையும் வேறுபடுத்துக.", "a": ["i) காற்றில் உள்ள ஈரத்தை உறிஞ்சும், ஆனால் கரையாது – காற்றில் உள்ள ஈரத்தை உறிஞ்சிக் கரையும்.", "ii) தன் இயற்பியல் நிலையை இழக்காது – தன் இயற்பியல் நிலையை இழக்கும்.", "iii) படிக உருவற்ற திண்மங்களாகவோ, திரவங்களாகவோ காணப்படுகின்றன – இவை படிக திண்மங்களாக மட்டுமே காணப்படுகின்றன."]}, {"id": 20, "subject": "chemistry", "q": "20. சேர்க்கை அல்லது கூடுகை வினை வரையறு, வெப்ப உமிழ் சேர்க்கை வினைக்கு எடுத்துக்காட்டு தருக.", "a": ["இரண்டு தனிமங்கள் சேர்ந்து ஒரு சேர்மத்தை தருவது சேர்க்கை வினை.", "எடுத்துக்காட்டு: C + O₂ → CO₂."]}, {"id": 21, "subject": "chemistry", "q": "21. மீள் மற்றும் மீளா வினைகளை வேறுபடுத்துக.", "a": ["i) முன்னோக்கு மற்றும் பின்னோக்கு வினைகள் நடைபெறும் – முன்னோக்கு வினை மட்டும் நடைபெறும்.", "ii) இருதிசைகளில் நடைபெறும் – ஒரே திசையில் நடைபெறும்.", "iii) மெதுவாக நடைபெறும் – வேகமாக நடைபெறும்.", "iv) சமநிலை அடையும் – சமநிலை அடையாது."]}, {"id": 22, "subject": "chemistry", "q": "22. படிவரிசை என்றால் என்ன? அதன் மூன்று பண்புகளை எழுது.", "a": ["ஒரே தொகுதி அல்லது ஒரே வகையில் உள்ள கரிமச் சேர்மங்கள் படிவரிசை சேர்மங்கள் ஆகும்.", "பண்புகள்: i) ஒரே வினைச்செயல் தொகுதிகளையும் பெற்றிருக்கும். ii) ஒரே பொது வாய்ப்பாட்டினால் குறிப்பிட இயலும். iii) ஒத்த வேதிவினைகளில் ஈடுபடுகின்றன."]}, {"id": 23, "subject": "chemistry", "q": "23. சோப்பு - டிடர்ஜெண்ட் வேறுபடுத்து.", "a": ["i) கடின நீரில் பயன்படுத்த முடியாது – கடின நீரிலும் பயன்படுத்தலாம்.", "ii) குறைவான நுரைகளை உருவாக்கும் – அதிக நுரைகளை உருவாக்கும்.", "iii) உயிரிய சிதைவு அடையும் – உயிரிய சிதைவு அடையாது."]}, {"id": 24, "subject": "biology", "q": "24. மலரும் தாவரங்களில் காணப்படும் மூன்று வகையான திசுத் தொகுப்புகளை குறிப்பிடுக.", "a": ["(i) தோல் திசுத்தொகுப்பு", "(ii) தளத்திசுத் தொகுப்பு", "(iii) வாஸ்குலார் திசுத் தொகுப்பு"]}, {"id": 25, "subject": "biology", "q": "25. சுவாச ஈவு என்றால் என்ன?", "a": ["சுவாச ஈவு = வெளியேறும் CO₂ அளவு / எடுத்துக் கொள்ளப்படும் O₂ அளவு."]}, {"id": 26, "subject": "biology", "q": "26. முயலின் பல் வாய்ப்பாட்டை எழுது.", "a": ["முயலின் பல் வாய்ப்பாடு: (I = 2/1, C = 0/0, PM = 3/2, M = 3/3) அல்லது 2033 / 1023."]}, {"id": 27, "subject": "biology", "q": "27. அட்டையின் ஒட்டுண்ணி தகவமைப்புகள் யாவை?", "a": ["i) தொண்டை – இரத்தத்தை உறிஞ்ச.", "ii) ஒட்டுறிஞ்சிகள் – கவ்வும் உறுப்புகள்.", "iii) வாயினுள் காணப்படும் மூன்று தாடைகள் – Y–வடிவ காயத்தை உருவாக்க.", "iv) தீனிப்பை – இரத்தத்தை சேமிக்க."]}, {"id": 28, "subject": "biology", "q": "28. நீராவிப்போக்கு என்றால் என்ன? நீராவிப்போக்கின் முக்கியத்துவத்தை எழுதுக.", "a": ["இலைகளில் உள்ள துளைகளின் வழியாக நீர் ஆவியாக வெளியேறும் நிகழ்ச்சி நீராவிப்போக்கு எனப்படும்.", "முக்கியத்துவம்: i) நீரானது மேலே செல்ல காரணமாகிறது. ii) ஒளிச்சேர்க்கைக்கு தேவையான நீர் கிடைக்கிறது."]}, {"id": 29, "subject": "biology", "q": "29. இதய வால்வுகளின் முக்கியத்துவம் என்ன?", "a": ["i) இதய வால்வுகள் இரத்த ஓட்டத்தை ஒழுங்குபடுத்த உதவுகின்றன.", "ii) இரத்தமானது ஒரே திசையில் செல்வதையும் மற்றும் பின்னோக்கி வருவதைத் தடுக்கவும் உதவுகின்றன."]}, {"id": 30, "subject": "biology", "q": "30. இரத்தத்தின் பணிகள் யாவை?", "a": ["i) சுவாச வாயுக்களைக் கடத்துகிறது.", "ii) உணவுப்பொருட்களை கடத்துகிறது.", "iii) ஹார்மோன்களைக் கடத்துகிறது.", "iv) கழிவுப்பொருட்களை கடத்துகிறது.", "v) நோய்தாக்குதலில் இருந்து உடலைப் பாதுகாக்கிறது."]}, {"id": 31, "subject": "biology", "q": "31. DNA விரல் ரேகைத் தொழில் நுட்பத்தின் பயன்பாடுகள் யாவை?", "a": ["i) குற்றவாளிகளை அடையாளம் காணப் பயன்படுகிறது.", "ii) ஒரு குழந்தையின் தந்தையை அடையாளம் காணப் பயன்படுகிறது."]}, {"id": 32, "subject": "biology", "q": "32. மருத்துவ துறையில் உயிர் தொழில் நுட்பவியலின் பங்கு யாது?", "a": ["i) இரத்த சர்க்கரை நோய் சிகிச்சைக்கான இன்சுலின்.", "ii) வளர்ச்சி குறைபாட்டினை நீக்கும் மனித வளர்ச்சி ஹார்மோன்.", "iii) இரத்தம் உறைதல் குறைபாட்டினை நீக்க இரத்தம் உறைதல் காரணிகள்.", "iv) வெறி நாய்க்கடி நோயைத்தடுக்கும் தடுப்பூசிகள்."]}, {"id": 33, "subject": "biology", "q": "33. வட்டார இனத் தாவரவியல் என்றால் என்ன? அதன் முக்கியத்துவம் யாது?", "a": ["ஒரு குறிப்பிட்ட பகுதியில் உள்ள தாவரங்கள் அப்பகுதியில் உள்ள மக்களுக்கு வழி வழியாக எவ்வாறு பயன்படுகிறது என்பதைப் பற்றி அறிவதாகும்.", "முக்கியத்துவம்: i) பரம்பரை பரம்பரையாகத் தாவரங்களின் பயன்களை அறிய முடிகிறது. ii) தெரிந்த மற்றும் தெரியாத தாவரங்களின் பயன்களை அறிய முடிகிறது."]}, {"id": 34, "subject": "biology", "q": "34. ஆர்க்கியாப்டெரிக்ஸ் இணைப்பு உயிரியாக ஏன் கருதப்படுகிறது?", "a": ["பறப்பன போல இறக்கைகளும், ஊர்வன போல வாலும் இருப்பதால் ஆர்க்கியாப்டெரிக்ஸ் இணைப்பு உயிரியாக கருதப்படுகிறது."]}, {"id": 35, "subject": "biology", "q": "35. மழைநீர் சேமிப்பின் முக்கியத்துவங்கள் யாவை?", "a": ["i) நிலத்தடி நீர் மட்டம் உயரும்.", "ii) குடிநீர் பற்றாக்குறை ஏற்படாது.", "iii) தூய நீரைப் பெற முடியும்."]}, {"id": 36, "subject": "biology", "q": "36. உயிரி வாயுவை பயன்படுத்துவதன் நன்மைகள் யாவை?", "a": ["i) குறைந்த புகை, குறைந்த மாசு.", "ii) இது பயன்படுத்த பாதுகாப்பானது.", "iii) பசுமை இல்ல வாயுக்கள் வெளியேறும் அளவை குறைக்கிறது."]}];
+let currentData = [...originalData];
+let currentFilter = 'all';
+let openIds = new Set();
+let completedIds = new Set(JSON.parse(localStorage.getItem('munaivendri_10sci_done') || '[]'));
+
+const subjectLabels = {
+  physics: 'இயற்பியல்',
+  chemistry: 'வேதியியல்',
+  biology: 'உயிரியல்'
+};
+
+function init() {
+  if (localStorage.getItem('munaivendri_dark') === 'true') {
+    document.body.classList.add('dark-mode');
+    document.getElementById('darkModeBtn').textContent = '☀️ Light Mode';
+  }
+  document.getElementById('schoolAddress').value = localStorage.getItem('munaivendri_address') || '';
+  document.getElementById('teacherName').value = localStorage.getItem('munaivendri_teacher') || '';
+  updateProgress();
+  renderList();
+}
+
+function saveMeta() {
+  localStorage.setItem('munaivendri_address', document.getElementById('schoolAddress').value);
+  localStorage.setItem('munaivendri_teacher', document.getElementById('teacherName').value);
+}
+
+function toggleDarkMode() {
+  const isDark = document.body.classList.toggle('dark-mode');
+  localStorage.setItem('munaivendri_dark', isDark);
+  document.getElementById('darkModeBtn').textContent = isDark ? '☀️ Light Mode' : '🌙 Dark Mode';
+}
+
+function setFilter(subject, btn) {
+  currentFilter = subject;
+  document.querySelectorAll('.filter-btn').forEach(b => b.classList.remove('active'));
+  btn.classList.add('active');
+  renderList();
+}
+
+function toggleAnswer(id) {
+  if (openIds.has(id)) {
+    openIds.delete(id);
+  } else {
+    openIds.add(id);
+  }
+  renderList();
+}
+
+function toggleAllAnswers(show) {
+  if (show) {
+    currentData.forEach(item => openIds.add(item.id));
+  } else {
+    openIds.clear();
+  }
+  renderList();
+}
+
+function shuffleQuestions() {
+  for (let i = currentData.length - 1; i > 0; i--) {
+    const j = Math.floor(Math.random() * (i + 1));
+    [currentData[i], currentData[j]] = [currentData[j], currentData[i]];
+  }
+  renderList();
+}
+
+function resetOrder() {
+  currentData = [...originalData];
+  renderList();
+}
+
+function toggleDone(id) {
+  if (completedIds.has(id)) {
+    completedIds.delete(id);
+  } else {
+    completedIds.add(id);
+  }
+  localStorage.setItem('munaivendri_10sci_done', JSON.stringify([...completedIds]));
+  updateProgress();
+  renderList();
+}
+
+function updateProgress() {
+  const total = originalData.length;
+  const done = completedIds.size;
+  const pct = Math.round((done / total) * 100);
+  document.getElementById('progressText').textContent = `${done} / ${total} (${pct}%)`;
+  document.getElementById('progressFill').style.width = `${pct}%`;
+}
+
+function renderList() {
+  const query = document.getElementById('searchInput').value.trim().toLowerCase();
+  const container = document.getElementById('qaList');
+
+  const filtered = currentData.filter(item => {
+    const matchesSubject = currentFilter === 'all' || item.subject === currentFilter;
+    const matchesQuery = !query ||
+      item.q.toLowerCase().includes(query) ||
+      item.a.some(line => line.toLowerCase().includes(query));
+    return matchesSubject && matchesQuery;
+  });
+
+  if (filtered.length === 0) {
+    container.innerHTML = '<div class="empty-msg">தேடிய வினா கிடைக்கவில்லை. வேறு சொல்லைக் கொண்டு தேடவும்.</div>';
+    return;
+  }
+
+  container.innerHTML = filtered.map(item => {
+    const isOpen = openIds.has(item.id);
+    const isDone = completedIds.has(item.id);
+    const answersHtml = item.a.map(line => `<p>${line}</p>`).join('');
+    return `
+      <div class="qa-card ${isDone ? 'completed' : ''}">
+        <div class="card-top">
+          <span class="badge ${item.subject}">${subjectLabels[item.subject]}</span>
+          <label class="done-label">
+            <input type="checkbox" ${isDone ? 'checked' : ''} onchange="toggleDone(${item.id})">
+            படித்து முடித்தேன்
+          </label>
+        </div>
+        <div class="question" onclick="toggleAnswer(${item.id})">
+          <span>${item.q}</span>
+          <span class="toggle-icon">${isOpen ? '▲ மூடு' : '▼ விடை பார்'}</span>
+        </div>
+        <div class="answer ${isOpen ? 'open' : ''}">
+          ${answersHtml}
+        </div>
+      </div>
+    `;
+  }).join('');
+}
+
+init();
+</script>
+</body>
+</html>
